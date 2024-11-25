@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Notify</string>
+    <string name="emailPlaceholder">Email</string>
+    <string name="passPlaceholder">Password</string>
+    <string name="firstNamePlaceholder">First Name</string>
+    <string name="lastNamePlaceholder">Last Name</string>
+    <string name="registerTxt">Register</string>
+    <string name="loginTxt">Login</string>
+    <string name="no_account">New here?</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="redirectBtnLogin">Register</string>
+    <string name="something">Error text</string>
+    <string name="load">Loading …</string>
+    <string name="wrong">Something went wrong</string>
+    <string name="error">We could\'t connect to the server. Please try again later.</string>
+    <string name="urlStr">http://87.227.174.139:8080/</string>
+    <string name="login">user/login</string>
+    <string name="redirectTxt" >Redirecting you to your profile…</string>
+    <string name="prefsName">MyPrefs</string>
+    <string name="logOut">Log Out</string>
+    <string name="nodemcus">NodeMCUs</string>
+    <string name="addNodeMCUsBtn">Add</string>
+    <string name="no_nodemcusTxt">No NodeMCU\'s connected</string>
+    <string name="deleteBtnTxt">Delete</string>
+    <string name="refreshBtnTxt">Refresh</string>
+    <string name="NodeMCU_name">NodeMCU Name</string>
+    <string name="NodeMCU_link">NodeMCU Link</string>
+    <string name="authCode">0929M2:298D:29D08D</string>
+    <string name="alarm_system">Alarm system</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+
+</resources>

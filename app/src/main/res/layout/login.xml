@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context=".Login"
+    android:background="@color/bg"
+    >
+    <!--    android:background="@color/bg"-->
+    <LinearLayout
+        android:id="@+id/mainDiv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/loginTxtDiv"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_height="0dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            >
+            <TextView
+                android:id="@+id/loginTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loginTxt"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/loginTxtDiv"
+            >
+            <LinearLayout
+                android:id="@+id/statusTxtLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/statusTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/something"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/emailDiv"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:padding="4dp"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailLayout"
+                    android:gravity="center"
+                    style="@style/YansInputLayout"
+                    android:textColorHint="#727272"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailInput"
+                        style="@style/YansInput"
+                        android:autofillHints="emailAddress"
+                        android:drawableStart="@drawable/email_icon"
+
+                        android:drawablePadding="10dp"
+                        android:hint="@string/emailPlaceholder"
+                        android:inputType="textEmailAddress"
+
+                        android:textColorHint="#78909C"
+                        tools:ignore="VisualLintTextFieldSize" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/passDiv"
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passLayout"
+                    android:gravity="center"
+                    style="@style/YansInputLayout"
+                    android:textColorHint="#727272"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passInput"
+                        style="@style/YansInput"
+                        android:autofillHints="emailAddress"
+                        android:drawableStart="@drawable/pass_icon"
+                        android:drawablePadding="8dp"
+                        android:hint="@string/passPlaceholder"
+                        android:inputType="textPassword"
+
+                        tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                tools:ignore="UselessLeaf">
+                <LinearLayout
+                    style="@style/YansButtonLayout"
+                    android:background="@drawable/rounded_btn"
+                    tools:ignore="DuplicateClickableBoundsCheck">
+
+                    <Button
+                        android:id="@+id/submitBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white"
+                        android:background="@android:color/transparent"
+                        android:text="@string/loginTxt"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                tools:ignore="UselessLeaf">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/white"
+                    android:text="@string/no_account"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_side_btn"
+                    >
+                    <Button
+                        android:id="@+id/redirectBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        style="@style/YansButton"
+                        android:background="@android:color/transparent"
+                        android:text="@string/redirectBtnLogin"
+                        android:textAllCaps="false"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

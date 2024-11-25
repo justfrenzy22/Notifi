@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "202553101379",
+    "project_id": "nodemcunotify-a9a23",
+    "storage_bucket": "nodemcunotify-a9a23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202553101379:android:1a6ca569e8ca90fc9158f6",
+        "android_client_info": {
+          "package_name": "com.notify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGGVP9HzJSV1yUpkHxh5SoEodPUfWJMrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
