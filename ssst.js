@@ -1,0 +1,1 @@
+(i = 4) => i > 5 ? true : false;
