@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        >
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            style="@style/YansButtonLayout"
+            android:gravity="center"
+            android:background="@drawable/rounded_side_btn"
+            >
+            <Button
+                android:id="@+id/closeBtn"
+                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:drawableEnd="@drawable/close_icon"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/write_nodemcu_name"
+        android:textSize="25sp" />
+    <LinearLayout
+        android:id="@+id/titleDiv"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="4dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleLayout"
+            android:gravity="center"
+            style="@style/YansInputLayout"
+            android:textColorHint="#727272"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titleInput"
+                style="@style/YansInput"
+                android:autofillHints="text"
+                android:drawableStart="@drawable/email_icon"
+
+                android:drawablePadding="10dp"
+                android:hint="@string/title"
+                android:inputType="text"
+
+                android:textColorHint="#78909C"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            style="@style/YansButtonLayout"
+            android:background="@drawable/rounded_btn"
+            tools:ignore="DuplicateClickableBoundsCheck">
+
+            <Button
+                android:id="@+id/submitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:text="@string/loginTxt"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

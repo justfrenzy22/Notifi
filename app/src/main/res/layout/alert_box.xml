@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="180dp"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rounded_alert_box"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        >
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        >
+        <TextView
+            android:id="@+id/msgTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Are you sure you want to turn off the alarm?"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            android:id="@+id/negativeBtnLayout"
+            style="@style/YansPillLayout"
+            android:background="@drawable/rounded_side_btn"
+            tools:ignore="TouchTargetSizeCheck">
+
+            <Button
+                android:id="@+id/negativeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/no"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/positiveBtnLayout"
+            style="@style/YansPillLayout"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/rounded_error_btn"
+            android:gravity="center"
+            tools:ignore="TouchTargetSizeCheck">
+
+            <Button
+                android:id="@+id/positiveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/yes"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+

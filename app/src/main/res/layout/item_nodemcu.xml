@@ -9,19 +9,23 @@
     card_view:cardBackgroundColor="@color/bg">
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="4dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:background="@drawable/textlines"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
 
             >
             <TextView
+                android:id="@+id/nodemcuName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -29,12 +33,14 @@
                 android:textColor="@color/white"
                 tools:ignore="NestedWeights" />
             <TextView
+                android:id="@+id/nodemcuLink"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="end"
+                android:linksClickable="true"
                 android:layout_weight="1"
                 android:textColor="@color/white"
-                android:text="@string/NodeMCU_link"
+                android:text="@string/hyperlink"
                 />
         </LinearLayout>
         <LinearLayout
@@ -42,43 +48,45 @@
             android:layout_height="0dp"
             android:layout_weight="2"
             android:baselineAligned="false"
+            android:paddingBottom="4dp"
             android:orientation="horizontal"
             android:gravity="center"
 
+
             >
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2.3"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:gravity="start"
                 android:layout_height="match_parent"
                 tools:ignore="NestedWeights">
+
                 <TextView
-                    android:id="@+id/authCode"
+                    android:id="@+id/authToken"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/authCode"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
+                    android:gravity="center_vertical|start"
+                    android:textSize="14sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     />
 
                 <LinearLayout
-                    style="@style/YansButtonLayout"
-                    android:layout_width="wrap_content"
+                    style="@style/YansIconButton"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/rounded_side_btn"
-                    tools:ignore="DuplicateClickableBoundsCheck,DuplicateClickableBoundsCheck,TouchTargetSizeCheck">
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/rounded_side_btn">
 
-                    <Button
-                        android:id="@+id/dropDownBtn"
-                        android:layout_width="match_parent"
+                    <ImageButton
+                        android:id="@+id/refreshBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:color="@color/white"
+                        android:contentDescription="TODO"
+                        android:textColor="@color/white"
                         android:gravity="center"
-                        android:text="@string/refreshBtnTxt"
+                        android:src="@drawable/refresh_icon"
                         android:textAllCaps="false"
                         tools:ignore="TouchTargetSizeCheck" />
                 </LinearLayout>
@@ -86,20 +94,22 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/YansButtonLayout"
-                android:layout_width="0dp"
+                style="@style/YansSmallLayout"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:gravity="end"
+
                 android:background="@drawable/rounded_btn"
                 tools:ignore="DuplicateClickableBoundsCheck,TouchTargetSizeCheck,TouchTargetSizeCheck">
 
                 <Button
                     android:id="@+id/deleteBtn"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/delete_icon"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:text="@string/deleteBtnTxt"
                     android:textAllCaps="false"

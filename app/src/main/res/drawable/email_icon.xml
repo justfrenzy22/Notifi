@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<selector>-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
     android:viewportWidth="24"
     android:viewportHeight="24"
@@ -20,5 +19,3 @@
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
 </vector>
-    <!--</selector>-->
-    <!--</selector>-->

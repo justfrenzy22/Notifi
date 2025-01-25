@@ -23,5 +23,4 @@ public class FCMHelper {
         return fcmToken;
     }
 
-
 }

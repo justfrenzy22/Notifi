@@ -97,7 +97,7 @@ public class Register extends AuthUtils {
 
             fetchData(
                     url,
-                    (status) -> {
+                    (status, _null) -> {
                         if (status == 200) {
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Intent intent = new Intent(Register.this, UserActivity.class);

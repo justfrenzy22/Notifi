@@ -2,11 +2,14 @@ package com.notify;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -73,7 +81,7 @@ public class AuthUtils extends AppCompatActivity {
         return isValid;
     }
 
-    protected void fetchData(String url, OnSuccess onSuccess, Runnable onFailure) {
+    protected void fetchData(String url, onSuccess<Void> onSuccess, Runnable onFailure) {
         OkHttpClient client = new OkHttpClient();
 
         new Thread(() -> {
@@ -97,10 +105,10 @@ public class AuthUtils extends AppCompatActivity {
                         if (status == 200) {
                             saveToken(accessToken);
                             Log.d(TAG, "Successful response: " + resBody);
-                            onSuccess.set(status);
+                            onSuccess.set(status, null);
                         } else if (status == 400) {
                             Log.d(TAG, "Bad request response (status): " + status);
-                            onSuccess.set(status);
+                            onSuccess.set(status, null);
                         }
                     });
                 } else {
@@ -114,12 +122,37 @@ public class AuthUtils extends AppCompatActivity {
         }).start();
     }
 
-    protected interface OnSuccess {
-        void set(int status);
+    protected void alarmChanged(String url, String accessToken, onSuccess<Void> res, Runnable onFailure) {
+
+            Map<String, String> headers = new HashMap<>();
+            headers.put("authorization", accessToken);
+
+            http(url, headers,
+                    (resBody) -> {
+                        try {
+                            JSONObject resJson = new JSONObject(resBody);
+
+                            int status = resJson.getInt("status");
+                            String msg = resJson.getString("msg");
+
+                            Log.d(TAG, "Response message: " + msg);
+
+                            if (status == 200) {
+                                new Handler(Looper.getMainLooper()).post(() -> {
+                                    res.set(status, null);
+                                });}
+                        }
+                        catch (JSONException e) {
+                            Log.d(TAG, "Error parsing JSON: " + e.getMessage());
+
+                        }
+                    },
+                    () -> runOnUiThread(onFailure));
+
     }
 
-    protected interface onSuccessLoad {
-        void set (int status, User user);
+    protected interface onSuccess<T> {
+        void set(int status, T t);
     }
 
     protected void saveToken(String accessToken) {
@@ -130,24 +163,20 @@ public class AuthUtils extends AppCompatActivity {
         Log.d(TAG, "Token saved in SharedPreferences: " + accessToken);
     }
 
-    protected void loadUser(String accessToken, onSuccessLoad onSuccess, Runnable onFailure) {
+    protected void loadUser(String accessToken, onSuccess<User> onSuccess, Runnable onFailure) {
         String url = "http://87.227.174.139:8080/user/load";
-        OkHttpClient client = new OkHttpClient();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("authorization", accessToken);
 
-        new Thread(() -> {
-            try {
-                Request req = new Request.Builder().url(url).addHeader("authorization", accessToken).build();
-                Response res = client.newCall(req).execute();
+        http(
+                url, headers,
+                (resBody) -> {
+                    try {
+                        JSONObject resJson = new JSONObject(resBody);
 
-                assert res.body() != null;
-                String resBody = res.body().string();
-                Log.d(TAG, "Response: " + resBody);
+                        int status = resJson.getInt("status");
+                        String msg = resJson.getString("msg");
 
-                if (res.isSuccessful()) {
-                    JSONObject resJson = new JSONObject(resBody);
-                    int status = resJson.getInt("status");
-
-                    runOnUiThread(() -> {
                         if (status == 200) {
                             try {
                                 JSONObject userJson = resJson.getJSONObject("user");
@@ -157,45 +186,179 @@ public class AuthUtils extends AppCompatActivity {
                                 Boolean isAlarmOn = userJson.getBoolean("isAlarmOn");
 
                                 JSONArray nodeMCUArray = resJson.getJSONArray("nodemcus");
-                                NodeMCU[] nodemcus = new NodeMCU[nodeMCUArray.length()];
+
+                                List<NodeMCU> nodemcus = new ArrayList<>();
 
                                 if (nodeMCUArray.length() > 0) {
                                     for (int i = 0; i < nodeMCUArray.length(); i++) {
-                                        JSONObject nodeMCUJson = nodeMCUArray.getJSONObject(i);  // Store the JSONObject for reuse
-                                        nodemcus[i] = new NodeMCU(
+                                        JSONObject nodeMCUJson = nodeMCUArray.getJSONObject(i);
+
+                                        JSONArray triggeredAtArr = nodeMCUJson.getJSONArray("alarmTriggeredAt");
+                                        Date[] triggeredAtDates = new Date[triggeredAtArr.length()];
+                                        for (int j = 0; j < triggeredAtArr.length(); j++) {
+                                            String dateString = triggeredAtArr.getString(j);
+                                            triggeredAtDates[j] = Date.from(java.time.Instant.parse(dateString));
+                                        }
+
+                                        Date createdAt = Date.from(java.time.Instant.parse(nodeMCUJson.getString("createdAt")));
+
+                                        NodeMCU nodeMCU = new NodeMCU(
+                                                nodeMCUJson.getString("_id"),
+                                                nodeMCUJson.getString("userId"),
                                                 nodeMCUJson.getString("name"),
-                                                nodeMCUJson.getString("authToken")
+                                                nodeMCUJson.getString("authToken"),
+                                                triggeredAtDates,
+                                                createdAt
                                         );
+
+                                        nodemcus.add(nodeMCU);
                                     }
                                 }
-
-                                Log.d(TAG, "User loaded: " + userJson);
-                                Log.d(TAG, "Nodemcus loaded: " + nodeMCUArray);
-                                User user;
-                                if (nodemcus.length > 0) {
-                                    user = new User(firstName, lastName, email, isAlarmOn, nodemcus);
-                                } else {
-                                    user = new User(firstName, lastName, email, isAlarmOn, new NodeMCU[0]);
+                                else {
+                                    nodemcus = Collections.emptyList();
                                 }
 
-                                onSuccess.set(status, user);
+                                final List<NodeMCU> finalNodemcus = nodemcus;
+                                runOnUiThread(() -> {
+                                    Log.d(TAG, "User loaded: " + userJson);
+                                    onSuccess.set(status, new User(firstName, lastName, email, isAlarmOn, finalNodemcus));
+                                });
+
                             } catch (JSONException e) {
                                 Log.e(TAG, "Error parsing JSON: " + e.getMessage());
                             }
-                        } else {
-                            Log.d(TAG, "Bad request: " + status);
-                            onFailure.run();
                         }
-                    });
-                } else {
-                    Log.e(TAG, "Unsuccessful response: " + res.code());
+                    } catch (JSONException e) {
+                        Log.w(TAG, "Error parsing JSON: " + e.getMessage());
+                        runOnUiThread(onFailure);
+                    }
+                },
+                () -> runOnUiThread(onFailure)
+        );
+
+    }
+
+    protected void createNodeMCU (String name,String accessToken, onSuccess<String> onSuccess, Runnable onFailure) {
+//        OkHttpClient client = new OkHttpClient();
+        String url = "http://87.227.174.139:8080/nodemcu/create?name=" + name;
+        Map<String, String> headers = Map.of("authorization", accessToken);
+        http(url, headers,
+            (resBody) -> {
+                try {
+                    JSONObject resJson = new JSONObject(resBody);
+
+                    int status = resJson.getInt("status");
+                    String msg = resJson.getString("msg");
+
+                    if (status == 200) {
+                        onSuccess.set(status, msg);
+                    }
+                    else {
+                        Toast.makeText(AuthUtils.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (JSONException e) {
                     runOnUiThread(onFailure);
                 }
-            } catch (JSONException | IOException e) {
-                Log.e(TAG, "Error fetching data: " + e.getMessage());
-                runOnUiThread(onFailure);
+            },
+            () -> runOnUiThread(onFailure)
+        );
+    }
+
+    protected void deleteNodeMCU (String _id, String accessToken, onSuccess<String> onSuccess, Runnable onFailure) {
+        String url = "http://87.227.174.139:8080/nodemcu/delete?nodeMCUId=" + _id;
+        Map<String, String> headers = Map.of("authorization", accessToken);
+
+        http(
+                url, headers,
+
+                (resBody) -> {
+                    try {
+                        JSONObject resJson = new JSONObject(resBody);
+
+                        int status = resJson.getInt("status");
+                        String msg = resJson.getString("msg");
+
+                        if (status == 200) {
+                            runOnUiThread(() -> onSuccess.set(status, msg));
+                        }
+                        else {
+                            runOnUiThread(() -> Toast.makeText(AuthUtils.this, msg, Toast.LENGTH_SHORT).show());
+                        }
+                    }
+                    catch (JSONException e) {
+                        runOnUiThread(onFailure);
+                    }
+                },
+                () -> runOnUiThread(onFailure)
+        );
+    }
+
+    protected void refreshNodeMCU (String _id, String accessToken, onSuccess<NodeMCURefreshResponse> onSuccess, Runnable onFailure) {
+        String url = "http://87.227.174.139:8080/nodemcu/refresh?nodeMCUId=" + _id;
+
+        Map<String, String> headers = Map.of("authorization", accessToken);
+
+        http(
+                url, headers,
+                (resBody) -> {
+                    try {
+                        Log.d(TAG, "Refresh NodeMCU Response: " + resBody);
+                        JSONObject resJson = new JSONObject(resBody);
+                        int status = resJson.getInt("status");
+                        String msg = resJson.getString("msg");
+
+                        if (status == 200) {
+                            String authToken = resJson.getString("nodeMCUToken");
+                            runOnUiThread(() -> onSuccess.set(status, new NodeMCURefreshResponse(msg, authToken)));
+                        }
+                        else {
+                            runOnUiThread(() -> Toast.makeText(AuthUtils.this, msg, Toast.LENGTH_SHORT).show());
+                        }
+                    }
+                    catch (JSONException e) {
+                        runOnUiThread(onFailure);
+                    }
+                },
+                () -> runOnUiThread(onFailure)
+        );
+    }
+
+    protected void http (String url, Map<String, String> headers, handleI success, Runnable onFailure) {
+        OkHttpClient client = new OkHttpClient();
+        new Thread(() -> {
+            try {
+                Request.Builder reqBuilder = new Request.Builder().url(url);
+
+                if (headers != null) {
+                    for (Map.Entry<String, String> header : headers.entrySet()) {
+                        reqBuilder.addHeader(header.getKey(), header.getValue());
+                    }
+                }
+
+                Request req = reqBuilder.build();
+                Response res = client.newCall(req).execute();
+
+                assert res.body() != null;
+                String resBody = res.body().string();
+                Log.d(TAG, "Response : " + resBody);
+
+                if (res.isSuccessful()) {
+                    success.set(resBody);
+                }
+                else {
+                    Log.e(TAG, "Unsuccessful response: " + res.code());
+                    onFailure.run();
+                }
+            }
+            catch (Exception e) {
+                Log.e(TAG, "Unsuccessful response: " + e.getMessage());
+                onFailure.run();
             }
         }).start();
     }
 
+    protected interface handleI {
+        void set(String resBody) throws JSONException;
+    }
 }

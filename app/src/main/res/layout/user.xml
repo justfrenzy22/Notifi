@@ -58,21 +58,22 @@
 
                     <LinearLayout
                         android:id="@+id/logOutDiv"
-                        style="@style/YansButtonLayout"
+                        android:padding="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/rounded_btn"
                         tools:ignore="DuplicateClickableBoundsCheck">
 
-                        <Button
+                        <ImageButton
                             android:id="@+id/logOutBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="2dp"
                             android:background="@android:color/transparent"
-                            android:text="@string/logOut"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white" />
+                            android:contentDescription="Settings"
+                            android:src="@drawable/gear_icon"
+                            tools:ignore="TouchTargetSizeCheck" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -136,48 +137,50 @@
                             android:gravity="center"
                             android:text="@string/nodemcus"
                             android:textColor="@color/white" />
+
                         <LinearLayout
+                            style="@style/YansButtonLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            style="@style/YansButtonLayout"
-                            android:background="@drawable/rounded_btn"
                             android:layout_marginStart="8dp"
-                            >
+                            android:background="@drawable/rounded_btn"
+                            tools:ignore="DuplicateClickableBoundsCheck">
+
                             <Button
                                 android:id="@+id/addNodeMCUsBtn"
-                                android:background="@android:color/transparent"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:textColor="@color/white"
+                                android:background="@android:color/transparent"
+                                android:drawableEnd="@drawable/add_icon"
                                 android:gravity="center"
                                 android:text="@string/addNodeMCUsBtn"
-                                android:textAllCaps="false"
-                                android:drawableEnd="@drawable/add_icon"
-                                />
+                                android:textAllCaps="false" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout
+                        style="@style/YansButtonLayout"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        style="@style/YansButtonLayout"
                         android:background="@drawable/rounded_side_btn"
-                        android:layout_marginStart="8dp"
-                        >
-                        <Button
+                        android:gravity="center"
+                        tools:ignore="DuplicateClickableBoundsCheck">
+
+                        <ImageButton
                             android:id="@+id/dropDownBtn"
-                            android:background="@android:color/transparent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="Dropdown"
                             android:gravity="center"
-                            android:textAllCaps="false"
-                            android:drawableEnd="@drawable/down_arrow"
-                            />
+                            android:src="@drawable/down_arrow" />
                     </LinearLayout>
                 </LinearLayout>
 <!--                android:visibility="visible"-->
                 <LinearLayout
                     android:id="@+id/noNodemcuSDiv"
-
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="center"

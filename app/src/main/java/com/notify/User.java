@@ -2,8 +2,10 @@ package com.notify;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Node;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -12,14 +14,14 @@ public class User {
     private final String lastName;
     private final String email;
     private final Boolean isAlarmOn;
-    private NodeMCU[] nodeMCUArray;
+    private final List<NodeMCU> nodeMCUList;
 
-    public User(String firstName, String lastName, String email, Boolean isAlarmOn, NodeMCU[] nodeMCUArray) {
+    public User(String firstName, String lastName, String email, Boolean isAlarmOn, List<NodeMCU> nodeMCUList) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.isAlarmOn = isAlarmOn;
-        this.nodeMCUArray = nodeMCUArray;
+        this.nodeMCUList = nodeMCUList;
     }
 
     public String getFirstName() {
@@ -38,7 +40,7 @@ public class User {
         return this.isAlarmOn;
     }
 
-    public NodeMCU[] getNodeMCUArray() {
-        return this.nodeMCUArray;
+    public List<NodeMCU> getNodeMCUList() {
+        return this.nodeMCUList;
     }
 }

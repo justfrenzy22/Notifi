@@ -101,7 +101,7 @@ public class Login extends AuthUtils {
 
             fetchData(
                     url,
-                    (status) -> {
+                    (status, _null) -> {
                         if (status == 200) {
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Intent intent = new Intent(Login.this, UserActivity.class);

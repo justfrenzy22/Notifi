@@ -29,5 +29,10 @@
     <string name="alarm_system">Alarm system</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
+    <string name="write_nodemcu_name">Write nodeMCU name:</string>
+    <string name="title">Title</string>
+    <string name="hyperlink"><a href="http://87.227.174.139:8080/nodemcu/link">NodeMCU Link</a></string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 
 </resources>

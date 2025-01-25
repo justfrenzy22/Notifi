@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuProfile" android:title="@string/profile" />
-    <item android:id="@+id/menuEmail" android:title="" />
-    <item android:id="@+id/menuSettings" android:title="@string/settings" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menuProfile" android:icon="@drawable/profile_icon_white" android:title="@string/profile" />
+    <item android:id="@+id/menuEmail" android:icon="@drawable/email_icon_white" android:title="" />
+    <item android:id="@+id/menuSettings" android:icon="@drawable/gear_icon" android:title="@string/settings" />
+    <item android:id="@+id/menuLogOut" android:icon="@drawable/logout_icon_white" android:title="@string/logOut" />
 </menu>
